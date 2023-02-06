@@ -17,9 +17,9 @@ const App = () => {
     setCart([...cart, product]);
   };
 
-  const updateQuantity = (product, index, newQuantity) => {
+  const updateQuantity = (index, newQuantity) => {
     const newCart = [...cart];
-    newCart[index].quantity = newQuantity;
+    newCart[index].quantity = Number(newQuantity);
     setCart(newCart);
   };
 
@@ -29,11 +29,16 @@ const App = () => {
     setCart(newCart);
   };
 
-  const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+  const totalItems = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+
+  const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <div className="container">
-      <h2 className="text-center m-3">Product List</h2>
+      <h1 className="text-center m-3">Product List</h1>
       <ul className="list-group">
         {products.map((product) => (
           <li
@@ -86,7 +91,8 @@ const App = () => {
           ))}
         </tbody>
       </table>
-      <h3 className="text-right m-3">Total items: {totalItems}</h3>
+      <h3 className="text-right m-3">Total Price: {totalItems}</h3>
+      <h3 className="text-right m-3">Total Quantity: {totalQuantity}</h3>
     </div>
   );
 };
